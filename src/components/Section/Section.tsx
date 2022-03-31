@@ -1,8 +1,21 @@
 import React from 'react';
-import { Box, BoxProps, Stack, TextProps, Text, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  BoxProps,
+  Stack,
+  TextProps,
+  Text,
+  Flex,
+  Badge,
+  HStack,
+  Image,
+} from '@chakra-ui/react';
 import { motion, Variants, useTransform, MotionValue } from 'framer-motion';
 
 import Noise from '../../assets/noise.png';
+import Rune from '../../assets/rune.png';
+
+import Award from '../Icons/Award';
 
 const MotionBox = motion<BoxProps>(Box);
 const MotionText = motion<Omit<TextProps, 'transition'>>(Text);
@@ -50,31 +63,59 @@ const Section = React.forwardRef<
         p={4}
         color="white"
         style={{ y }}
-        bgImage={`radial-gradient(circle, rgba(9,12,17,0.2) 0%, rgba(9,12,17,1) 100%),url(${Noise}), url(${char.backgroundImage})`}
+        bgImage={`radial-gradient(circle, rgba(9,12,17,0.4) 0%, rgba(9,12,17,1) 100%),url(${Noise}), url(${char.backgroundImage})`}
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
       >
-        <Flex alignItems="center" h="100%" p="140px 120px">
-          <Stack spacing={3} w="xl">
-            <MotionText
-              variants={textVariants}
-              transition={{ duration: 1 }}
-              fontWeight="extrabold"
-              fontFamily="Raleway"
-              fontSize="9xl"
-            >
-              {char.name}
-            </MotionText>
-            <MotionText
-              variants={textVariants}
-              transition={{ duration: 1, delay: 0.5 }}
-              fontWeight="regular"
-              fontFamily="Raleway"
-              fontSize="lg"
-            >
-              {char.description}
-            </MotionText>
+        <Flex alignItems="center" h="100%" w="100%" p="140px 120px">
+          <Stack spacing={4}>
+            <Stack w="xl">
+              <MotionText
+                variants={textVariants}
+                transition={{ duration: 1 }}
+                fontWeight="extrabold"
+                fontFamily="Raleway"
+                fontSize="9xl"
+              >
+                {char.name}
+              </MotionText>
+              <MotionText
+                variants={textVariants}
+                transition={{ duration: 1, delay: 0.5 }}
+                fontWeight="regular"
+                fontFamily="Raleway"
+                fontSize="lg"
+              >
+                {char.description}
+              </MotionText>
+            </Stack>
+            <HStack spacing={2}>
+              {char.drops.map((drop) => (
+                <Flex
+                  alignItems="center"
+                  p="4px 12px"
+                  bgColor="rgba(255, 255, 255, 0.1)"
+                  backdropFilter="blur(100px)"
+                  borderRadius="4px"
+                >
+                  {drop.type === 'rune' ? (
+                    <Image src={Rune} w="24px" />
+                  ) : (
+                    <Award />
+                  )}
+                  <Text
+                    color="#9E9E9F"
+                    fontWeight="regular"
+                    fontFamily="Raleway"
+                    fontSize="md"
+                    ml={2}
+                  >
+                    {drop.name}
+                  </Text>
+                </Flex>
+              ))}
+            </HStack>
           </Stack>
         </Flex>
       </MotionBox>
