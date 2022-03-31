@@ -13,7 +13,7 @@ import Rennala from '../../assets/rennala.png';
 
 export const MotionBox = motion<BoxProps>(Box);
 
-const chars = [
+const bosses = [
   {
     name: 'Malenia',
     description:
@@ -71,10 +71,10 @@ const Main = () => {
         ref={wrapperRef}
       >
         <Header />
-        {chars.map((char, index) => (
+        {bosses.map((boss, index) => (
           <Section
-            key={char.name}
-            char={char}
+            key={boss.name}
+            boss={boss}
             elementHeight={elementHeight}
             index={index}
             scroll={scrollY}
