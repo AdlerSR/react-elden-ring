@@ -6,6 +6,7 @@ import {
   TextProps,
   Text,
   Flex,
+  FlexProps,
   HStack,
   Image,
 } from '@chakra-ui/react';
@@ -18,6 +19,7 @@ import Award from '../Icons/Award';
 
 const MotionBox = motion<BoxProps>(Box);
 const MotionText = motion<Omit<TextProps, 'transition'>>(Text);
+const MotionFlex = motion<Omit<FlexProps, 'transition'>>(Flex);
 
 const textVariants: Variants = {
   offscreen: {
@@ -25,6 +27,17 @@ const textVariants: Variants = {
   },
   onscreen: {
     opacity: 1,
+  },
+};
+
+const bannerVariants: Variants = {
+  offscreen: {
+    opacity: 0,
+    x: 100,
+  },
+  onscreen: {
+    opacity: 1,
+    x: 0,
   },
 };
 
@@ -101,13 +114,15 @@ const Section = React.forwardRef<HTMLElement, Props>(
                 </MotionText>
               </Stack>
               <HStack spacing={2}>
-                {boss.drops.map((drop) => (
-                  <Flex
+                {boss.drops.map((drop, dropIndex) => (
+                  <MotionFlex
                     alignItems="center"
                     p="4px 12px"
                     bgColor="rgba(255, 255, 255, 0.1)"
                     backdropFilter="blur(100px)"
                     borderRadius="4px"
+                    variants={bannerVariants}
+                    transition={{ duration: 1, delay: 0.5 * dropIndex }}
                   >
                     {drop.type === 'rune' ? (
                       <Image src={Rune} w="24px" />
@@ -123,7 +138,7 @@ const Section = React.forwardRef<HTMLElement, Props>(
                     >
                       {drop.name}
                     </Text>
-                  </Flex>
+                  </MotionFlex>
                 ))}
               </HStack>
             </Stack>
